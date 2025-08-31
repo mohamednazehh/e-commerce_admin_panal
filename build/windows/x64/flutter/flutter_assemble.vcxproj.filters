@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Mohamed Nazeh\Documents\Projects\ecom_startup_code\ecom_startup_code\client_side\admin_panal_startup\build\windows\x64\CMakeFiles\264f632ec4b95afdc3c09288e09d6268\flutter_windows.dll.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Mohamed Nazeh\Documents\Projects\ecom_startup_code\ecom_startup_code\client_side\admin_panal_startup\build\windows\x64\CMakeFiles\a193e7551e848efc63eb20b3ec1547ad\flutter_assemble.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Mohamed Nazeh\Documents\Projects\ecom_startup_code\ecom_startup_code\client_side\admin_panal_startup\windows\flutter\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Mohamed Nazeh\Documents\Projects\ecom_startup_code\ecom_startup_code\client_side\admin_panal_startup\build\windows\x64\flutter\CMakeFiles\flutter_assemble" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B31E38B2-1AB6-3826-8A6B-D62C8B19CA8D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
