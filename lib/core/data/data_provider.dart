@@ -63,10 +63,10 @@ class DataProvider extends ChangeNotifier {
 
   DataProvider() {
     getAllCategory();
+    getAllSubCategory();
   }
 
 
-  //TODO: should complete getAllCategory
 
   Future<List<Category>> getAllCategory({bool showSnack = false}) async {
     try {
@@ -100,7 +100,6 @@ class DataProvider extends ChangeNotifier {
   }
 
 
-  //TODO: should complete filterCategories
 
   void filterCategories(String keyword) {
     if (keyword.isEmpty) {
@@ -116,10 +115,60 @@ class DataProvider extends ChangeNotifier {
   }
 
 
-  //TODO: should complete getAllSubCategory
+
+  Future<List<SubCategory>> getAllSubCategory({bool showSnack = false}) async {
+    try {
+      Response response = await service.getItems(endpointUrl: 'subCategories');
+
+      if (response.isOk) {
+        ApiResponse<List<SubCategory>> apiResponse =
+        ApiResponse<List<SubCategory>>.fromJson(
+          response.body,
+              (json) => (json as List)
+              .map((item) => SubCategory.fromJson(item))
+              .toList(),
+        );
+
+        _allSubCategories = apiResponse.data ?? [];
+        _filteredSubCategories = List.from(_allSubCategories); // Initialize filtered list
+
+        notifyListeners();
+
+        if (showSnack) {
+          SnackBarHelper.showSuccessSnackBar(apiResponse.message);
+        }
+      } else {
+        if (showSnack) {
+          SnackBarHelper.showErrorSnackBar(
+            response.body?['message'] ?? response.statusText ?? "Unknown error",
+          );
+        }
+      }
+    } catch (e) {
+      if (showSnack) {
+        SnackBarHelper.showErrorSnackBar(e.toString());
+      }
+      rethrow;
+    }
+
+    return _filteredSubCategories;
+  }
 
 
-  //TODO: should complete filterSubCategories
+  void filterSubCategories(String keyword) {
+    if (keyword.isEmpty) {
+      _filteredSubCategories = List.from(_allSubCategories);
+    } else {
+      final lowerKeyword = keyword.toLowerCase();
+      _filteredSubCategories = _allSubCategories.where((subcategory) {
+        return (subcategory.name ?? '')
+            .toLowerCase()
+            .contains(lowerKeyword);
+      }).toList();
+    }
+    notifyListeners();
+  }
+
 
 
   //TODO: should complete getAllBrands
