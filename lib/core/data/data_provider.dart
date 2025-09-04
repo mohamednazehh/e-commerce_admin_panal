@@ -171,10 +171,57 @@ class DataProvider extends ChangeNotifier {
 
 
 
-  //TODO: should complete getAllBrands
+  Future<List<Brand>> getAllBrands({bool showSnack = false}) async {
+    try {
+      Response response = await service.getItems(endpointUrl: 'brands');
+
+      if (response.isOk) {
+        ApiResponse<List<Brand>> apiResponse = ApiResponse<List<Brand>>.fromJson(
+          response.body,
+              (json) =>
+              (json as List).map((item) => Brand.fromJson(item)).toList(),
+        );
+
+        _allBrands = apiResponse.data ?? [];
+        _filteredBrands = List.from(_allBrands); // Initialize filtered list with all data
+        notifyListeners();
+
+        if (showSnack) {
+          SnackBarHelper.showSuccessSnackBar(apiResponse.message);
+        }
+      } else {
+        if (showSnack) {
+          SnackBarHelper.showErrorSnackBar(
+              'Error ${response.body?['message'] ?? response.statusText}');
+        }
+      }
+    } catch (e) {
+      if (showSnack) {
+        SnackBarHelper.showErrorSnackBar(e.toString());
+      }
+      rethrow;
+    }
+
+    return _filteredBrands;
+  }
 
 
-  //TODO: should complete filterBrands
+
+  void filterBrands(String keyword) {
+    if (keyword.isEmpty) {
+      _filteredBrands = List.from(_allBrands);
+    } else {
+      final lowerKeyword = keyword.toLowerCase();
+      _filteredBrands = _allBrands.where((brand) {
+        return (brand.name ?? '')
+            .toLowerCase()
+            .contains(lowerKeyword);
+      }).toList();
+    }
+
+    notifyListeners();
+  }
+
 
 
   //TODO: should complete getAllVariantType
